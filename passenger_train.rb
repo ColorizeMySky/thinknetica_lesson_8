@@ -5,6 +5,7 @@ class PassengerTrain < Train
 
   def add_wagon(wagon)
     return unless wagon.type == 'passenger'
+
     super
   end
 end

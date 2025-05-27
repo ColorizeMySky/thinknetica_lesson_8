@@ -27,9 +27,9 @@ class Route
 
   def validate!
     errors = []
-    errors << "Начальная станция не может отсутствовать" if @stations.first.nil?
-    errors << "Конечная станция не может отсутствовать" if @stations.last.nil?
-    errors << "Начальная и конечная станции не могут совпадать" if @stations.first == @stations.last
+    errors << 'Начальная станция не может отсутствовать' if @stations.first.nil?
+    errors << 'Конечная станция не может отсутствовать' if @stations.last.nil?
+    errors << 'Начальная и конечная станции не могут совпадать' if @stations.first == @stations.last
 
     raise errors.join("\n") unless errors.empty?
   end

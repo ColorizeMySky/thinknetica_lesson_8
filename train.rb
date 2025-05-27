@@ -7,7 +7,7 @@ class Train
   include ManufacturingCompanies
   include Validator
 
-  attr_reader :number,  :wagons, :type, :route,:current_station_index, :speed
+  attr_reader :number, :wagons, :type, :route, :current_station_index, :speed
 
   NUMBER_FORMAT = /^[a-zа-я0-9]{3}-?[a-zа-я0-9]{2}$/i
 
@@ -38,7 +38,7 @@ class Train
   end
 
   def stopped?
-    self.speed.zero?
+    speed.zero?
   end
 
   def stop
@@ -54,11 +54,11 @@ class Train
   end
 
   def add_wagon(wagon)
-    self.wagons << wagon if stopped?
+    wagons << wagon if stopped?
   end
 
   def remove_wagon(wagon)
-    self.wagons.delete(wagon) if stopped?
+    wagons.delete(wagon) if stopped?
   end
 
   def assign_route(route)
@@ -68,15 +68,15 @@ class Train
   end
 
   def current_station
-    self.route.stations[self.current_station_index] if has_route?
+    route.stations[current_station_index] if has_route?
   end
 
   def next_station
-    self.route.stations[self.current_station_index + 1] unless last_station
+    route.stations[current_station_index + 1] unless last_station
   end
 
   def previous_station
-    self.route.stations[self.current_station_index - 1] unless first_station
+    route.stations[current_station_index - 1] unless first_station
   end
 
   def go_forward
@@ -98,15 +98,15 @@ class Train
 
   # в спецификации не требуется доступ к этим методам, это внутренная логика
   def has_route?
-    self.route
+    route
   end
 
   def last_station?
-    has_route? && self.current_station_index == self.route.stations.size - 1
+    has_route? && current_station_index == route.stations.size - 1
   end
 
   def first_station?
-    has_route? && self.current_station_index == 0
+    has_route? && current_station_index == 0
   end
 
   def move_to(type)
@@ -120,10 +120,11 @@ class Train
 
   def validate!
     errors = []
-    errors << "Номер не может отсутствовать" if number.to_s.strip.empty?
-    errors << "Номер имеет недопустимый формат" if number !~ NUMBER_FORMAT
-    errors << "Тип поезда не может отсутствовать" if type.to_s.strip.empty?
-    errors << "Неизвестный тип поезда. Допустимые значения: 'cargo', 'passenger'" unless ['cargo', 'passenger'].include?(type)
+    errors << 'Номер не может отсутствовать' if number.to_s.strip.empty?
+    errors << 'Номер имеет недопустимый формат' if number !~ NUMBER_FORMAT
+    errors << 'Тип поезда не может отсутствовать' if type.to_s.strip.empty?
+    errors << "Неизвестный тип поезда. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo
+                                                                                            passenger].include?(type)
 
     raise errors.join("\n") unless errors.empty?
   end

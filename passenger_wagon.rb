@@ -1,6 +1,6 @@
 class PassengerWagon < Wagon
-  alias_method :busy_seats, :used_place
-  alias_method :total_seats, :total_place
+  alias busy_seats used_place
+  alias total_seats total_place
   public :busy_seats, :total_seats
 
   def initialize(seats)

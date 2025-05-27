@@ -7,7 +7,7 @@ class Station
 
   attr_reader :title, :trains
 
-  TITLE_FORMAT = /^[a-zа-я0-9\s\-]+$/i
+  TITLE_FORMAT = /^[a-zа-я0-9\s-]+$/i
 
   @@stations = []
 
@@ -47,10 +47,10 @@ class Station
 
   def validate!
     errors = []
-    errors << "Название не может отсутствовать" if title.to_s.strip.empty?
-    errors << "Название станции слишком короткое (минимум 2 символа)" if title.length < 2
-    errors << "Название станции слишком длинное (максимум 50 символов)" if title.length > 50
-    errors << "Название станции содержит недопустимые символы" unless title !~ TITLE_FORMAT
+    errors << 'Название не может отсутствовать' if title.to_s.strip.empty?
+    errors << 'Название станции слишком короткое (минимум 2 символа)' if title.length < 2
+    errors << 'Название станции слишком длинное (максимум 50 символов)' if title.length > 50
+    errors << 'Название станции содержит недопустимые символы' unless title !~ TITLE_FORMAT
 
     raise errors.join("\n") unless errors.empty?
   end

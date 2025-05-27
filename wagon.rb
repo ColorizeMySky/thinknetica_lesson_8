@@ -22,6 +22,7 @@ class Wagon
   def take_place(place)
     raise 'Вагон полностью заполнен' if @used_place == @total_place
     raise "Недостаточно места. Доступно: #{free_place}" if place > free_place
+
     @used_place += place
   end
 
@@ -32,7 +33,8 @@ class Wagon
   private
 
   def validate!
-    raise "Тип вагона не может отсутствовать" if type.to_s.strip.empty?
-    raise "Неизвестный тип вагона. Допустимые значения: 'cargo', 'passenger'" unless ['cargo', 'passenger'].include?(type)
+    raise 'Тип вагона не может отсутствовать' if type.to_s.strip.empty?
+    raise "Неизвестный тип вагона. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo
+                                                                                        passenger].include?(type)
   end
 end
