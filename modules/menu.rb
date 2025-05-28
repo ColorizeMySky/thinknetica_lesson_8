@@ -32,7 +32,7 @@ module Menu
     MENU_CONFIG.each { |item| puts "#{item[:id]}. #{item[:title]}" }
   end
 
-  def get_choice
+  def make_choice
     puts 'Выберите действие: '
     gets.chomp.to_i
   end

@@ -22,11 +22,11 @@ module InstanceCounter
     attr_reader :instances_count
 
     def instances
-      @instances_count ||= 0
+      @instances ||= 0
     end
 
     def increment_instances_count
-      @instances_count += 1
+      @instances_count = instances + 1
     end
   end
 

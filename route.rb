@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'modules/instance_counter'
-require_relative 'modules/validator'
+require_relative 'modules/validators/validator'
+require_relative 'modules/validators/route_validator'
 
 # Класс Route представляет маршрут следования поезда между станциями.
 # Реализует логику управления последовательностью станций и включает:
@@ -27,6 +28,7 @@ require_relative 'modules/validator'
 class Route
   include InstanceCounter
   include Validator
+  include RouteValidator
 
   attr_reader :stations
 
@@ -44,16 +46,5 @@ class Route
 
   def remove_station(station)
     @stations.delete(station)
-  end
-
-  private
-
-  def validate!
-    errors = []
-    errors << 'Начальная станция не может отсутствовать' if @stations.first.nil?
-    errors << 'Конечная станция не может отсутствовать' if @stations.last.nil?
-    errors << 'Начальная и конечная станции не могут совпадать' if @stations.first == @stations.last
-
-    raise errors.join("\n") unless errors.empty?
   end
 end

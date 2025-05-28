@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'modules/manufacturing_companies'
-require_relative 'modules/validator'
+require_relative 'modules/validators/validator'
+require_relative 'modules/validators/wagon_validator'
 
 # Базовый класс Wagon представляет железнодорожный вагон в системе.
 # Содержит общую логику для всех типов вагонов и служит родительским классом
@@ -28,6 +29,7 @@ require_relative 'modules/validator'
 class Wagon
   include ManufacturingCompanies
   include Validator
+  include WagonValidator
 
   attr_reader :type
 
@@ -52,12 +54,5 @@ class Wagon
 
   def free_place
     @total_place - @used_place
-  end
-
-  private
-
-  def validate!
-    raise 'Тип вагона не может отсутствовать' if type.to_s.strip.empty?
-    raise "Неизвестный тип вагона. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo passenger].include?(type)
   end
 end
