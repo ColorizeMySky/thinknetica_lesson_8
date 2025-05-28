@@ -1,6 +1,30 @@
+# frozen_string_literal: true
+
 require_relative 'modules/manufacturing_companies'
 require_relative 'modules/validator'
 
+# Базовый класс Wagon представляет железнодорожный вагон в системе.
+# Содержит общую логику для всех типов вагонов и служит родительским классом
+# для специализированных вагонов (CargoWagon и PassengerWagon).
+#
+# Основные возможности:
+# - Хранение информации о типе вагона (грузовой/пассажирский)
+# - Учет занятого и свободного места
+# - Базовые проверки при добавлении груза/пассажиров
+#
+# Подключаемые модули:
+# - ManufacturingCompanies - информация о производителе вагона
+# - Validator - проверка корректности данных
+#
+# Пример использования (через дочерние классы):
+#   wagon = PassengerWagon.new(50)  # Вагон на 50 мест
+#   wagon.take_seat                # Занимает 1 место
+#
+# Особенности:
+# - Не предназначен для прямого создания экземпляров
+# - Требует указания типа при инициализации (cargo/passenger)
+# - Предоставляет защищенный интерфейс для работы с вместимостью
+# - Автоматически проверяет валидность данных при создании
 class Wagon
   include ManufacturingCompanies
   include Validator
@@ -34,7 +58,6 @@ class Wagon
 
   def validate!
     raise 'Тип вагона не может отсутствовать' if type.to_s.strip.empty?
-    raise "Неизвестный тип вагона. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo
-                                                                                        passenger].include?(type)
+    raise "Неизвестный тип вагона. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo passenger].include?(type)
   end
 end

@@ -1,7 +1,34 @@
+# frozen_string_literal: true
+
 require_relative 'modules/instance_counter'
 require_relative 'modules/manufacturing_companies'
 require_relative 'modules/validator'
 
+# Класс Train представляет базовый поезд в железнодорожной системе.
+# Реализует основную логику работы поездов и служит родительским классом
+# для специализированных типов поездов (PassengerTrain и CargoTrain).
+#
+# Основные возможности:
+# - Управление скоростью движения
+# - Прицепка/отцепка вагонов
+# - Назначение маршрута и перемещение между станциями
+# - Поиск поездов по номеру
+#
+# Подключаемые модули:
+# - InstanceCounter - подсчет созданных экземпляров
+# - ManufacturingCompanies - информация о производителе
+# - Validator - проверка корректности данных
+#
+# Пример использования:
+#   train = Train.new('123-45', 'passenger')
+#   train.assign_route(route)
+#   train.go_forward
+#
+# Особенности:
+# - Поддерживает два типа поездов: passenger и cargo
+# - Требует строгого формата номера (XXX-XX или XXXXX)
+# - Позволяет работать с вагонами только при остановке
+# - Автоматически регистрируется в системе учета поездов
 class Train
   include InstanceCounter
   include ManufacturingCompanies
@@ -123,7 +150,7 @@ class Train
     errors << 'Номер не может отсутствовать' if number.to_s.strip.empty?
     errors << 'Номер имеет недопустимый формат' if number !~ NUMBER_FORMAT
     errors << 'Тип поезда не может отсутствовать' if type.to_s.strip.empty?
-    errors << "Неизвестный тип поезда. Допустимые значения: 'cargo', 'passenger'" unless %w[cargo
+    errors << 'Неизвестный тип поезда. Допустимые значения: "cargo", "passenger"' unless %w[cargo
                                                                                             passenger].include?(type)
 
     raise errors.join("\n") unless errors.empty?
